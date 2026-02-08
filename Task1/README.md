@@ -5,3 +5,13 @@
 ## Решение
 
 
+```
+Browser
+  ↓ (cookie)
+Frontend (React)
+  ↓
+BFF / Auth Server (bionicpro-auth)
+  ↓ (client_secret)
+Keycloak
+```
+
