@@ -2,6 +2,7 @@
 using BionicProAuth.Services;
 using Microsoft.AspNetCore.DataProtection;
 using StackExchange.Redis;
+using BionicProAuth.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +21,9 @@ builder.Services.AddDataProtection()
       .PersistKeysToFileSystem(new DirectoryInfo(@"/keys")) // любой volume
 	.SetApplicationName("bionicpro-auth");
 
-builder.Services.AddHttpClient();
+builder.Services.Configure<YandexOAuthOptions>(
+    builder.Configuration.GetSection("YandexOAuth"));
+builder.Services.AddScoped<IUserRepository, RedisUserRepository>();
 
 builder.Services.AddCors(options =>
 {

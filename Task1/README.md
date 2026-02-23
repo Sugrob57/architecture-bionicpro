@@ -47,7 +47,11 @@ Keycloak
    ![screen1](/Screenshot_mfa1.png)
 
 3. После настройки OTP — каждый вход требует код
+   Har-Лог с примером: [mfa-sample2.har](/mfa-sample2.har)
 
-![screen1](/Screenshot_mfa2.png)
+   ![screen1](/Screenshot_mfa2.png)
 
 ## Задача 6. Добавьте OAuth 2.0 от Яндекс ID
+
+[Описание реализации](/Task1-6/README.md)
+
