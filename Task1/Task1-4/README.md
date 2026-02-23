@@ -63,6 +63,6 @@ bash /opt/keycloak/setup-ldap-mappers.sh
 ## Результат
 
 После синхронизации пользователи получат роли из групп LDAP:
-![screen1](/syncScreen.png)
+![screen1](/Task1/Task1-4/syncScreen.png)
 
-![screen2](/syncScreen2.png)
+![screen2](/Task1/Task1-4/syncScreen2.png)

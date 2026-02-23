@@ -15,11 +15,11 @@
 
 1. Пользователь логинится через LDAP
 2. Если OTP ещё не настроен - Keycloak попросит отсканировать QR
-   Har-Лог с примером: [mfa-sample.har](/mfa-sample.har)
+   Har-Лог с примером: [mfa-sample.har](/Task1/Task1-5/mfa-sample.har)
 
-   ![screen1](/Screenshot_mfa1.png)
+   ![screen1](/Task1/Task1-5/Screenshot_mfa1.png)
 
 3. После настройки OTP — каждый вход требует код
 
-![screen1](/Screenshot_mfa2.png)
+![screen1](/Task1/Task1-5/Screenshot_mfa2.png)
 
