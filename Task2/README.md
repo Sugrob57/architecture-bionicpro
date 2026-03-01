@@ -6,7 +6,7 @@
 
 ![BionicPRO_C4_model.drawio-ETL.png](/Task2/BionicPRO_C4_model.drawio-ETL.png)
 
-## Решение
+## Airflow DAG
 
 За основу взят [пример из теории](https://github.com/Yandex-Practicum/architecture-DWH-pipeline).
 
@@ -62,3 +62,6 @@ docker compose up --build
 SELECT * FROM dm_clients_telemetry FINAL;
 ```
 
+![airflowDag_1.png](/Task2/airflowDag_1.png)
+
+## Report service Backend Api
