@@ -65,3 +65,11 @@ SELECT * FROM dm_clients_telemetry FINAL;
 ![airflowDag_1.png](/Task2/airflowDag_1.png)
 
 ## Report service Backend Api
+
+[ReportService.sln](/Task2/data-services/report-service/ReportService.sln) сервис реализован.
+
+Проверка:
+GET [http://localhost:8086/api/reports?clientId=user1](http://localhost:8086/api/reports?clientId=user1)
+
+![reports-api-response.png](/Task2/reports-api-response.png)
+

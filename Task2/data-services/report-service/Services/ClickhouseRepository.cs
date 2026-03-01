@@ -8,10 +8,10 @@ namespace ReportService.Services
 		public ClickhouseRepository(
 			IConfiguration configuration)
 		{
-			_connectionString = configuration.GetConnectionString("ClickHouse.ConnectionString");
+			_connectionString = configuration["ClickHouse.ConnectionString"];
 		}
 
-		public async Task<ClientTelemetryReport> GetClientReportAsync(string client_id)
+		public async Task<ClientTelemetryReport> GetClientReportAsync(string clientId)
 		{
 			await using var connection = new ClickHouseConnection(_connectionString);
 			await connection.OpenAsync();
@@ -27,12 +27,12 @@ namespace ReportService.Services
 					last_activity,
 					calculated_at
 				FROM dm_clients_telemetry FINAL
-				WHERE full_name = @client_id
+				WHERE full_name = @full_name
 				";
 
 			var parameter = command.CreateParameter();
 			parameter.ParameterName = "full_name";
-			parameter.Value = client_id;
+			parameter.Value = clientId;
 			command.Parameters.Add(parameter);
 
 			await using var reader = await command.ExecuteReaderAsync();
