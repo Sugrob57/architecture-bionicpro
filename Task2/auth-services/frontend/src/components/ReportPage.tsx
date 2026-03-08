@@ -10,7 +10,7 @@ const ReportPage: React.FC = () => {
       setLoading(true);
       setError(null);
 
-      const response = await fetch(`${API_URL}/api/reports`, {
+      const response = await fetch(`${API_URL}/api/v1/reports/telemetry`, {
         credentials: 'include'
       });
 
@@ -21,6 +21,27 @@ const ReportPage: React.FC = () => {
       // обработка файла / ответа
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const userReport = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const response = await fetch(`${API_URL}/api/v1/reports/user`, {
+        credentials: 'include'
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to download user report');
+      }
+
+      // обработка файла / ответа
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred for user report');
     } finally {
       setLoading(false);
     }
@@ -37,6 +58,14 @@ const ReportPage: React.FC = () => {
           className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
         >
           {loading ? 'Generating Report...' : 'Download Report'}
+        </button>
+
+        <button
+          onClick={userReport}
+          disabled={loading}
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        >
+          {loading ? 'Generating user Report...' : 'Download user Report'}
         </button>
 
         {error && (
