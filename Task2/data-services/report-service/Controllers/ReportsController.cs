@@ -7,7 +7,6 @@ namespace ReportService.Controllers
 	[Route("api/reports")]
 	public class ReportsController : ControllerBase
 	{
-
 		public ReportsController(ClickhouseRepository repository)
 		{
 			_repository = repository;

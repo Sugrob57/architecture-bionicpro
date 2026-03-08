@@ -14,9 +14,9 @@ namespace BionicProAuth.Services
 
 		public async Task<ClientTelemetryReport> GetUserReportAsync(string userId)
 		{
-			var uri = $"{ReportsUrl}?clientId={userId}";
+			var uri = $"{ReportsUrl}/api/reports?clientId={userId}";
 			Console.WriteLine($"Get report for {uri}");
-			var report = await _http.GetFromJsonAsync<ClientTelemetryReport>($"{ReportsUrl}?clientId={userId}");
+			var report = await _http.GetFromJsonAsync<ClientTelemetryReport>(uri);
 			return report;
 		}
 

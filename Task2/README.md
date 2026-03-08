@@ -1,12 +1,12 @@
 # Задание 2. Разработка сервиса отчётов
 
-## Архитектура решения
+## 1. Архитектура решения
 
 [BionicPRO_C4_model.drawio.xml](/Task2/BionicPRO_C4_model.drawio.xml)
 
 ![BionicPRO_C4_model.drawio-ETL.png](/Task2/BionicPRO_C4_model.drawio-ETL.png)
 
-## Airflow DAG
+## 2. Airflow DAG
 
 За основу взят [пример из теории](https://github.com/Yandex-Practicum/architecture-DWH-pipeline).
 
@@ -36,17 +36,6 @@
 
 ### Запуск
 
-1. Сгенерировать данные для примера
-```bash
-python ./data/generate_data.py
-```
-
-2. Запустить докер
-```bash
-docker compose down -v
-docker compose up --build
-```
-
 3. Открыть http://localhost:8085 
 
 4. Включить DAG
@@ -64,7 +53,7 @@ SELECT * FROM dm_clients_telemetry FINAL;
 
 ![airflowDag_1.png](/Task2/airflowDag_1.png)
 
-## Report service Backend Api
+## 3. Report service Backend Api
 
 [ReportService.sln](/Task2/data-services/report-service/ReportService.sln) сервис реализован.
 
@@ -73,3 +62,13 @@ GET [http://localhost:8086/api/reports?clientId=user1](http://localhost:8086/api
 
 ![reports-api-response.png](/Task2/reports-api-response.png)
 
+## 4. Получение отчета через Frontend
+
+1. В сервис [/Task2/auth-services/bionicpro-auth/BionicProAuth.sln](/Task2/auth-services/bionicpro-auth/BionicProAuth.sln) добавлен метод проксирования вызова отчета по телеметрии в [ReportService.sln](/Task2/data-services/report-service/ReportService.sln).
+2. В сервис [frontend - ReportPage.tsx](/Task2/auth-services/frontend/src/components/ReportPage.tsx) добавлен вызов бекенда для получения отчета.
+3. Вызов в [api/v1/reports](/Task2/auth-services/bionicpro-auth/Controllers/ReportsController.cs) выполняется без передачи параметров. Определение clientId (userId) происходит посредством извлечения данных из авторизованной сессии клиента. Отчет запрашивается из [ReportService.sln](/Task2/data-services/report-service/ReportService.sln) только в случае успешного прохождения авторизации.
+
+### Проверка
+[Пример har-лога](/Task2/getReport.har) с успешным получением отчета по авторизованному пользователю.
+
+![userReport](/Task2/user-report.png)
