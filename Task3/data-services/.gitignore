@@ -238,3 +238,5 @@ clickhouse_data/
 **/.vs/*
 **/obj/*
 **/bin/*
+minio/.minio.sys/*
+nginx/cache/*
