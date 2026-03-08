@@ -10,47 +10,21 @@ namespace BionicProAuth.Controllers
 	public class ReportsController : ControllerBase
 	{
 		public ReportsController(
-			ITokenService tokens,
-			ISessionStore sessionStore,
-			IConfiguration cfg,
 			ReportService reportService)
 		{
-			_tokens = tokens;
-			_cfg = cfg;
-			_sessionStore = sessionStore;
 			_reportService = reportService;
-		}
-
-		[HttpGet("me")]
-		public IActionResult GetReports()
-		{
-			Console.WriteLine("me requested");
-			// если мы тут — значит SessionMiddleware пропустил
-			return Ok(new { authenticated = true });
 		}
 
 		[HttpGet("telemetry")]
 		public async Task<IActionResult> GetTelemetryReportAsync()
 		{
-			string sessionId = null;
+			var email = HttpContext.Items["UserEmail"];
 
-			if (HttpContext.Request.Cookies.TryGetValue("BIONICPRO_SESSION", out sessionId))
-			{
-				return Unauthorized("BIONICPRO_SESSION cookie not found");
-			}
-
-			var session = await _sessionStore.GetAsync(sessionId);
-
-			if (session == null)
-			{
-				return NotFound($"Session for {sessionId} not stored");
-			}
-
-			string userId = session.UserEmail;
+			string userId = email?.ToString()?.Split("@")?.First();
 
 			if (userId == null)
 			{
-				return BadRequest($"User email is empty for {sessionId}");
+				return BadRequest($"User email is empty for {email}");
 			}
 
 			var report = await _reportService.GetUserReportAsync(userId);
@@ -61,28 +35,16 @@ namespace BionicProAuth.Controllers
 		[HttpGet("user")]
 		public async Task<IActionResult> GetUserInfoAsync()
 		{
-			string sessionId = null;
-
-			if (HttpContext.Request.Cookies.TryGetValue("BIONICPRO_SESSION", out sessionId))
-			{
-				return Unauthorized("BIONICPRO_SESSION cookie not found");
-			}
-
-			var session = await _sessionStore.GetAsync(sessionId);
+			var session = HttpContext.Items["Session"];
 
 			if (session == null)
 			{
-				return Unauthorized($"Session for {sessionId} not stored");
+				return Unauthorized($"Session not stored");
 			}
 
 			return Ok(session);
 		}
 
-		
-
-		private readonly IConfiguration _cfg;
-		private readonly ISessionStore _sessionStore;
-		private readonly ITokenService _tokens;
 		private readonly ReportService _reportService;
 	}
 }

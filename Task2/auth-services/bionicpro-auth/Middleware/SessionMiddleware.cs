@@ -80,8 +80,11 @@ namespace BionicProAuth.Middleware
 					});
 			}
 
+			ctx.Items["Session"] = session;
 			ctx.Items["AccessToken"] = session.AccessToken;
-            Console.WriteLine($"session.AccessToken {session.AccessToken}");
+			ctx.Items["UserEmail"] = session.UserEmail;
+			Console.WriteLine($"session.AccessToken {session.AccessToken}");
+			Console.WriteLine($"session.UserEmail {session.UserEmail}");
 			await _next(ctx);
 		}
 	}
