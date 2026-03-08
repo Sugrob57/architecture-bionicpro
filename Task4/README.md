@@ -1,36 +1,30 @@
-# Задание 1. Повышение безопасности системы
-
-## Настройка
-
-```bash
-docker compose up --build
-
-curl -X POST http://localhost:8083/connectors \
--H "Content-Type: application/json" \
--d '{
-"name": "crm-postgres-connector",
-"config": {
-"connector.class": "io.debezium.connector.postgresql.PostgresConnector",
-"database.hostname": "crm-db",
-"database.port": "5432",
-"database.user": "crm",
-"database.password": "crm",
-"database.dbname": "crm",
-"database.server.name": "crm",
-"table.include.list": "public.clients",
-"plugin.name": "pgoutput",
-"slot.name": "debezium_slot",
-"publication.autocreate.mode": "filtered"
-}
-}'
-```
-
-
+# Задание 4. Повышение оперативности и стабильности работы CRM
 
 ## Решение
 
+1. В [docker-compose](/Task4/docker-compose.yml) добавлены компоненты
+    - crm-db (PostgresDB для CRM)
+    - zookeeper
+    - kafka
+    - kafka-connect
 
-```sql
-INSERT INTO clients(full_name, birth_date, city)
-VALUES ('Mike Brown','1993-02-02','Rome');
+2. Из [data-services/dags/dag_etl_clickhouse.py](/Task4/data-services/dags/dag_etl_clickhouse.py) удален шаг загрузки данных из CRM (т.к. теперь данные будут проливаться через debezium)
+
+3. Добавлены sql-скрипты [init-clickhouse-db.sql](/Task4/data-services/db/init-clickhouse-db.sql) для создания `kafka_clients` и MATERIALIZED VIEW `mv_clients`
+
+4. Добавлена конфигурация для активации Debezium - [debezium/crm-connector.json](/Task4/data-services/debezium/crm-connector.json)
+  - Она может быть применена на старте контейнера (закомментировано)
+  - Так же можно применить командой:
+```bash
+curl -X POST \
+  -H "Content-Type: application/json" \
+  --data @./data-services/debezium/crm-connector.json \
+  http://127.0.0.1:8083/connectors
 ```
+
+## Проверка
+
+http://localhost:8086/api/reports?clientId=user1 
+
+> [!WARNING]
+> Конфигурация не проверена, мощности моей рабочей станции не хватает для запуска такого docker-compose.

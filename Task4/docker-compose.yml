@@ -352,7 +352,16 @@ services:
       GROUP_ID: 1
       CONFIG_STORAGE_TOPIC: connect_configs
       OFFSET_STORAGE_TOPIC: connect_offsets
-      STATUS_STORAGE_TOPIC: connect_statuses
+      STATUS_STORAGE_TOPIC: connect_statuses  
+    #volumes:
+    #- ./data-services/debezium:/kafka/connectors
+    #command:
+    #  - bash
+    #  - -c
+    #  - |
+    #    /docker-entrypoint.sh start &
+    #    sleep 15
+    #    /kafka/connectors/register-connectors.sh
     networks:
       - dag_sample
 
