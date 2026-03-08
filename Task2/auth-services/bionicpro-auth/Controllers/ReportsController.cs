@@ -1,10 +1,8 @@
 ﻿using BionicProAuth.Services;
 using Microsoft.AspNetCore.Mvc;
-using ISessionStore = BionicProAuth.Services.ISessionStore;
 
 namespace BionicProAuth.Controllers
 {
-	// Controllers/AuthController.cs
 	[ApiController]
 	[Route("api/v1/reports")]
 	public class ReportsController : ControllerBase
