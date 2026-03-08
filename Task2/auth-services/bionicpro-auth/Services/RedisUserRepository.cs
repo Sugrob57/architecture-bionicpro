@@ -54,5 +54,6 @@ public class RedisUserRepository : IUserRepository
     }
 
     private static string UserKey(Guid id) => $"user:{id}";
+
     private static string YandexKey(string yandexId) => $"user:yandex:{yandexId}";
 }

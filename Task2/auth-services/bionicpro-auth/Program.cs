@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddHttpClient<ITokenService, KeycloakTokenService>();
+builder.Services.AddHttpClient<ReportService>();
 
 var redisConnectionString = builder.Configuration["Redis"]!;
 var hostingPort = builder.Configuration["Hosting.Port"]!;

@@ -4,6 +4,8 @@
 	public class SessionData
 	{
 		public string UserId { get; set; } = default!;
+		
+		public string UserEmail { get; set; } = default!;
 
 		public string AccessToken { get; set; } = default!;
 

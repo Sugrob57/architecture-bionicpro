@@ -1,6 +1,7 @@
 ﻿using BionicProAuth.Models;
 using Duende.IdentityModel.Client;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace BionicProAuth.Services
 {
@@ -56,6 +57,7 @@ namespace BionicProAuth.Services
 			return new SessionData
 			{
 				UserId = jwt.Subject!,
+				UserEmail = jwt.Claims.FirstOrDefault(c => c.Type == "email")?.Value,
 				AccessToken = token.AccessToken!,
 				RefreshToken = token.RefreshToken!,
 				AccessTokenExpiresAt = DateTime.UtcNow.AddSeconds(token.ExpiresIn)
