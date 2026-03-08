@@ -1,5 +1,13 @@
 # Задание 2. Разработка сервиса отчётов
 
+## Запуск
+
+```bash
+cd /Task2/
+
+docker compose up --build
+```
+
 ## 1. Архитектура решения
 
 [BionicPRO_C4_model.drawio.xml](/Task2/BionicPRO_C4_model.drawio.xml)
@@ -13,8 +21,8 @@
 ### Архитектруа текущего примера работы с Airflow
 
 - Источники данных:
-    - crm-clients-data.csv
-    - clients-telemetry-data.csv
+    - [crm-clients-data.csv](/Task2/data-services/data/crm-clients-data.csv)
+    - [clients-telemetry-data.csv](/Task2/data-services/data/clients-telemetry-data.csv)
 - OLAP: ClickHouse
 - Оркестратор: Apache Airflow
 - Executor: LocalExecutor
